@@ -12,6 +12,11 @@ use Yii;
  * @property string $last_name
  * @property string $patronymic
  * @property string $date_of_birth
+ * @property string $country_of_birth
+ * @property string $region_of_birth
+ * @property string $city_of_birth
+ * @property string $district_of_birth
+ * @property string $locality_of_birth
  * @property int $sex
  *
  * @property Document[] $documents
@@ -36,13 +41,7 @@ class Person extends \yii\db\ActiveRecord
             [['date_of_birth'], 'safe'],
             [['sex'], 'integer'],
             [['first_name', 'last_name', 'patronymic'], 'string', 'max' => 50],
-        ];
-    }
-    
-    public function extraFields()
-    {
-        return [
-            'documents'
+            [['country_of_birth', 'region_of_birth', 'city_of_birth', 'district_of_birth', 'locality_of_birth'], 'string', 'max' => 100],
         ];
     }
 
@@ -53,11 +52,16 @@ class Person extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'first_name' => 'Имя',
-            'last_name' => 'Фамилия',
-            'patronymic' => 'Отчество',
-            'date_of_birth' => 'Дата рождения',
-            'sex' => 'Пол',
+            'first_name' => 'First Name',
+            'last_name' => 'Last Name',
+            'patronymic' => 'Patronymic',
+            'date_of_birth' => 'Date Of Birth',
+            'country_of_birth' => 'Country Of Birth',
+            'region_of_birth' => 'Region Of Birth',
+            'city_of_birth' => 'City Of Birth',
+            'district_of_birth' => 'District Of Birth',
+            'locality_of_birth' => 'Locality Of Birth',
+            'sex' => 'Sex',
         ];
     }
 

@@ -8,13 +8,17 @@ use Yii;
  * This is the model class for table "{{%document}}".
  *
  * @property int $id
- * @property int $series
- * @property int $number
- * @property string $date_of_issue
+ * @property string $series
+ * @property string $number
+ * @property string $date_of_receiving
+ * @property string $document_issuing_locality
+ * @property string $department_name
+ * @property string $department_code
  * @property int $type
  * @property int $person_id
  *
  * @property Person $person
+ * @property Registration[] $registrations
  */
 class Document extends \yii\db\ActiveRecord
 {
@@ -32,24 +36,14 @@ class Document extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['series', 'number', 'date_of_issue', 'type', 'person_id'], 'required'],
-            [['series', 'number', 'type', 'person_id'], 'integer'],
-            [['date_of_issue'], 'safe'],
+            [['series', 'number', 'date_of_receiving', 'department_name', 'department_code', 'type', 'person_id'], 'required'],
+            [['date_of_receiving'], 'safe'],
+            [['type', 'person_id'], 'integer'],
+            [['series'], 'string', 'max' => 4],
+            [['number'], 'string', 'max' => 6],
+            [['document_issuing_locality', 'department_name'], 'string', 'max' => 50],
+            [['department_code'], 'string', 'max' => 7],
             [['person_id'], 'exist', 'skipOnError' => true, 'targetClass' => Person::className(), 'targetAttribute' => ['person_id' => 'id']],
-        ];
-    }
-
-    public function fields()
-    {
-        return [
-            'id', 'series', 'number', 'date_of_issue', 'type'
-        ];
-    }
-
-    public function extraFields()
-    {
-        return [
-           'person_id' 
         ];
     }
 
@@ -60,10 +54,13 @@ class Document extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'series' => 'Серия',
-            'number' => 'Номер',
-            'date_of_issue' => 'Дата выдачи',
-            'type' => 'Тип',
+            'series' => 'Series',
+            'number' => 'Number',
+            'date_of_receiving' => 'Date Of Receiving',
+            'document_issuing_locality' => 'Document Issuing Locality',
+            'department_name' => 'Department Name',
+            'department_code' => 'Department Code',
+            'type' => 'Type',
             'person_id' => 'Person ID',
         ];
     }
@@ -74,6 +71,14 @@ class Document extends \yii\db\ActiveRecord
     public function getPerson()
     {
         return $this->hasOne(Person::className(), ['id' => 'person_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRegistrations()
+    {
+        return $this->hasMany(Registration::className(), ['document_id' => 'id']);
     }
 
     /**

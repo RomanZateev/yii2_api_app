@@ -49,7 +49,7 @@ return [
             'rules' => [
                 [
                     'class' => UrlRule::class,
-                    'controller' => 'person'
+                    'controller' => ['person', 'registration']
                 ],
                 
                 'POST person/<personId:\d+>/document' => 'document/create',
