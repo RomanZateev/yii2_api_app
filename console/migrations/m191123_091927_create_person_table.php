@@ -18,6 +18,11 @@ class m191123_091927_create_person_table extends Migration
             'last_name' => $this->string(50)->notNull(),
             'patronymic' => $this->string(50),
             'date_of_birth' => $this->date()->notNull(),
+            'country_of_birth' => $this->string(100),
+            'region_of_birth' => $this->string(100),
+            'city_of_birth' => $this->string(100),
+            'district_of_birth' => $this->string(100),
+            'locality_of_birth' => $this->string(100),
             'sex' => $this->boolean()->notNull()
         ]);
     }

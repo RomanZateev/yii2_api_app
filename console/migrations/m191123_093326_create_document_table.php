@@ -16,7 +16,10 @@ class m191123_093326_create_document_table extends Migration
             'id' => $this->primaryKey(),
             'series' => $this->string(4)->notNull(),
             'number' => $this->string(6)->notNull(),
-            'date_of_issue' => $this->date()->notNull(),
+            'date_of_receiving' => $this->date()->notNull(),
+            'document_issuing_locality' => $this->string(50),
+            'department_name' => $this->string(50)->notNull(),
+            'department_code' => $this->string(7)->notNull(),
             'type' => $this->smallInteger()->notNull(),
             'person_id' => $this->integer()->notNull()
         ]);
