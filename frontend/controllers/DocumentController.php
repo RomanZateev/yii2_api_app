@@ -8,6 +8,8 @@ use yii\data\ActiveDataProvider;
 
 use frontend\models\Document;
 
+use Yii;
+
 class DocumentController extends ActiveController
 {
     public $modelClass = Document::class;
@@ -21,8 +23,6 @@ class DocumentController extends ActiveController
         $actions['view']['findModel'] = [$this, 'actionView'];
 
         $actions['delete']['findModel'] = [$this, 'actionDelete'];
-
-        //$actions['create']['findModel'] = [$this, 'actionCreate'];
 
         return $actions;
     }
@@ -49,31 +49,9 @@ class DocumentController extends ActiveController
         $deleted =  $this->modelClass::find()
         ->where( ['person_id' => \Yii::$app->request->get('personId') ] )
         ->andWhere( ['id' => $id ] )
-        ->one();
+        ->one()
+        ->delete();
 
-        $deleted->delete();
-
-        return 'Document successfully deleted';
+        Yii::$app->getResponse()->setStatusCode(204);
     }
-
-    // public function actionCreate()
-    // {
-    //     $model = new $this->modelClass();
-
-    //     if ($model->load(Yii::$app->request->post()) && $model->save()) {
-    //         return 'Document successfully added';
-    //     } else {
-    //         return 'Please, try add ducument again';
-    //     }
-
-    //     $model->load(Yii::$app->getRequest()->getBodyParams(), '');
-    //     if ($model->save()) {
-    //         $response = Yii::$app->getResponse();
-    //         $response->setStatusCode(201);
-    //         $id = implode(',', array_values($model->getPrimaryKey(true)));
-    //         $response->getHeaders()->set('Location', Url::toRoute([$this->viewAction, 'id' => $id], true));
-    //     } elseif (!$model->hasErrors()) {
-    //         throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
-    //     }
-    // }
 }

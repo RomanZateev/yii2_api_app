@@ -49,21 +49,14 @@ return [
             'rules' => [
                 [
                     'class' => UrlRule::class,
-                    'controller' => ['person', 'document']
+                    'controller' => 'person'
                 ],
-                [
-                    'pattern' => 'person/<personId:\d+>/document',
-                    'route' => 'document/index'
-                ],
-
+                
+                'POST person/<personId:\d+>/document' => 'document/create',
                 'PUT person/<personId:\d+>/document/<id:\d+>' => 'document/update',
                 'DELETE person/<personId:\d+>/document/<id:\d+>' => 'document/delete',
+                'GET person/<personId:\d+>/document' => 'document/index',
                 'person/<personId:\d+>/document/<id:\d+>' => 'document/view',
-                'POST person/<personId:\d+>/document' => 'document/create',
-
-                '' => 'site/index',    
-
-                '<controller:\w+>/<action:\w+>/' => '<controller>/<action>'
             ],
         ],
     ],
