@@ -1,4 +1,7 @@
 <?php
+
+use yii\rest\UrlRule;
+
 $params = array_merge(
     require(__DIR__ . '/../../common/config/params.php'),
     require(__DIR__ . '/../../common/config/params-local.php'),
@@ -14,6 +17,9 @@ return [
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-frontend',
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser'
+            ],
         ],
         'user' => [
             'identityClass' => 'common\models\User',
@@ -36,14 +42,30 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /*
+        
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                [
+                    'class' => UrlRule::class,
+                    'controller' => ['person', 'document']
+                ],
+                [
+                    'pattern' => 'person/<personId:\d+>/document',
+                    'route' => 'document/index'
+                ],
+
+                'PUT person/<personId:\d+>/document/<id:\d+>' => 'document/update',
+                'DELETE person/<personId:\d+>/document/<id:\d+>' => 'document/delete',
+                'person/<personId:\d+>/document/<id:\d+>' => 'document/view',
+                'POST person/<personId:\d+>/document' => 'document/create',
+
+                '' => 'site/index',    
+
+                '<controller:\w+>/<action:\w+>/' => '<controller>/<action>'
             ],
         ],
-        */
     ],
     'params' => $params,
 ];
