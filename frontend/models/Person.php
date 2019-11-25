@@ -37,8 +37,10 @@ class Person extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['first_name', 'last_name', 'patronymic', 'country_of_birth', 'region_of_birth', 'city_of_birth', 'district_of_birth', 'locality_of_birth'], 'trim'],
             [['first_name', 'last_name', 'date_of_birth', 'sex'], 'required'],
             [['date_of_birth'], 'safe'],
+            ['sex', 'in', 'range' => [0, 1]],
             [['sex'], 'integer'],
             [['first_name', 'last_name', 'patronymic'], 'string', 'max' => 50],
             [['country_of_birth', 'region_of_birth', 'city_of_birth', 'district_of_birth', 'locality_of_birth'], 'string', 'max' => 100],

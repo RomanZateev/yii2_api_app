@@ -36,6 +36,9 @@ class Document extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['series', 'number', 'document_issuing_locality', 'department_name', 'department_code'], 'trim'],
+            [['series', 'number'], 'number'],
+            [['series', 'number'], 'unique'],
             [['series', 'number', 'date_of_receiving', 'department_name', 'department_code', 'type', 'person_id'], 'required'],
             [['date_of_receiving'], 'safe'],
             [['type', 'person_id'], 'integer'],

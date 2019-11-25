@@ -39,6 +39,7 @@ class Registration extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['registration_type', 'registration_region', 'registration_city', 'registration_district', 'registration_locality', 'registration_street', 'registration_street', 'registration_house', 'registration_building', 'registration_apartment', 'registration_department_name'], 'trim'],
             [['registration_type', 'registration_date', 'registration_region', 'registration_department_name', 'document_id'], 'required'],
             [['registration_type', 'document_id'], 'integer'],
             [['registration_date'], 'safe'],
